@@ -1,3 +1,4 @@
+
 import { cva } from "class-variance-authority"
 import { Slot } from "@radix-ui/react-slot"
 import React from "react"
@@ -5,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useSidebar } from "./sidebar-provider"
 import type { SidebarMenuButtonProps } from "./types"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const sidebarMenuButtonVariants = cva(
   "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
@@ -69,7 +71,7 @@ export const SidebarMenuButton = React.forwardRef<HTMLButtonElement, SidebarMenu
 )
 SidebarMenuButton.displayName = "SidebarMenuButton"
 
-const SidebarMenu = React.forwardRef<
+export const SidebarMenu = React.forwardRef<
   HTMLUListElement,
   React.ComponentProps<"ul">
 >(({ className, ...props }, ref) => (
@@ -82,7 +84,7 @@ const SidebarMenu = React.forwardRef<
 ))
 SidebarMenu.displayName = "SidebarMenu"
 
-const SidebarMenuItem = React.forwardRef<
+export const SidebarMenuItem = React.forwardRef<
   HTMLLIElement,
   React.ComponentProps<"li">
 >(({ className, ...props }, ref) => (
@@ -95,7 +97,7 @@ const SidebarMenuItem = React.forwardRef<
 ))
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
-const SidebarMenuAction = React.forwardRef<
+export const SidebarMenuAction = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button"> & {
     asChild?: boolean
@@ -126,7 +128,7 @@ const SidebarMenuAction = React.forwardRef<
 })
 SidebarMenuAction.displayName = "SidebarMenuAction"
 
-const SidebarMenuBadge = React.forwardRef<
+export const SidebarMenuBadge = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, ...props }, ref) => (
@@ -147,7 +149,7 @@ const SidebarMenuBadge = React.forwardRef<
 ))
 SidebarMenuBadge.displayName = "SidebarMenuBadge"
 
-const SidebarMenuSkeleton = React.forwardRef<
+export const SidebarMenuSkeleton = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     showIcon?: boolean
@@ -185,7 +187,7 @@ const SidebarMenuSkeleton = React.forwardRef<
 })
 SidebarMenuSkeleton.displayName = "SidebarMenuSkeleton"
 
-const SidebarMenuSub = React.forwardRef<
+export const SidebarMenuSub = React.forwardRef<
   HTMLUListElement,
   React.ComponentProps<"ul">
 >(({ className, ...props }, ref) => (
@@ -202,13 +204,13 @@ const SidebarMenuSub = React.forwardRef<
 ))
 SidebarMenuSub.displayName = "SidebarMenuSub"
 
-const SidebarMenuSubItem = React.forwardRef<
+export const SidebarMenuSubItem = React.forwardRef<
   HTMLLIElement,
   React.ComponentProps<"li">
 >(({ ...props }, ref) => <li ref={ref} {...props} />)
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
 
-const SidebarMenuSubButton = React.forwardRef<
+export const SidebarMenuSubButton = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentProps<"a"> & {
     asChild?: boolean
@@ -237,5 +239,3 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 })
 SidebarMenuSubButton.displayName = "SidebarMenuSubButton"
-
-import { Skeleton } from "@/components/ui/skeleton"

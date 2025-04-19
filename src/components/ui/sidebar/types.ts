@@ -2,6 +2,7 @@
 import { type VariantProps } from "class-variance-authority"
 import { type ReactNode } from "react"
 import { sidebarMenuButtonVariants } from "./sidebar-menu"
+import { TooltipContent } from "@/components/ui/tooltip"
 
 export type SidebarContext = {
   state: "expanded" | "collapsed"
@@ -30,4 +31,4 @@ export interface SidebarMenuButtonProps extends React.ComponentProps<"button"> {
   asChild?: boolean
   isActive?: boolean
   tooltip?: string | React.ComponentProps<typeof TooltipContent>
-} & VariantProps<typeof sidebarMenuButtonVariants>
+}

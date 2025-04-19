@@ -18,6 +18,28 @@ export const useSidebar = () => {
   return context
 }
 
+// Simple hook to check if we're on mobile
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  )
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener("resize", checkIsMobile)
+    checkIsMobile()
+
+    return () => window.removeEventListener("resize", checkIsMobile)
+  }, [])
+
+  return isMobile
+}
+
 export const SidebarProvider = React.forwardRef<HTMLDivElement, SidebarProviderProps>(
   ({ defaultOpen = true, open: openProp, onOpenChange: setOpenProp, className, style, children, ...props }, ref) => {
     const isMobile = useIsMobile()
