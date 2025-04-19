@@ -51,10 +51,26 @@ const AuthPage = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, x: activeTab === 'login' ? -20 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: activeTab === 'login' ? 20 : -20 }}
-              transition={{ duration: 0.3 }}
+              initial={{ 
+                opacity: 0, 
+                x: activeTab === 'login' ? -40 : 40,
+                rotateY: activeTab === 'login' ? -10 : 10 
+              }}
+              animate={{ 
+                opacity: 1, 
+                x: 0,
+                rotateY: 0 
+              }}
+              exit={{ 
+                opacity: 0, 
+                x: activeTab === 'login' ? 40 : -40,
+                rotateY: activeTab === 'login' ? 10 : -10 
+              }}
+              transition={{ 
+                duration: 0.4,
+                type: "spring",
+                stiffness: 100
+              }}
             >
               <TabsContent value="login" className="mt-0">
                 <LoginForm />

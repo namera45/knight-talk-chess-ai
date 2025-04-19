@@ -136,7 +136,7 @@ const Dashboard = () => {
         
         {/* Main dashboard content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column */}
+          {/* Left column - Recent matches */}
           <motion.div 
             variants={itemVariants}
             className="lg:col-span-2 space-y-6"
@@ -145,7 +145,7 @@ const Dashboard = () => {
             <RecentMatchesList matches={recentMatches} />
           </motion.div>
 
-          {/* Right column */}
+          {/* Right column - Rating chart and Daily Puzzle */}
           <motion.div 
             variants={itemVariants}
             className="space-y-6"
@@ -153,18 +153,27 @@ const Dashboard = () => {
             {/* Rating chart */}
             <UserRatingChart data={ratingData} currentRating={1310} />
             
-            {/* Featured position - we could show a daily puzzle or interesting position here */}
-            <motion.div variants={itemVariants} className="mt-6">
-              <h3 className="text-lg font-medium mb-3 text-glow">Daily Chess Puzzle</h3>
-              <ChessboardContainer 
-                startingFen="r2qk2r/ppp1bppp/2n5/3pP3/3P4/2P5/PP4PP/RNBQK2R w KQkq - 0 1"
-                showControls={false}
-              />
-              <div className="mt-3 px-4 py-3 neo-blur rounded-lg">
-                <p className="text-sm text-muted-foreground">
-                  White to move and gain advantage. Find the best move!
-                </p>
-              </div>
+            {/* Daily Chess Puzzle */}
+            <motion.div variants={itemVariants}>
+              <Card className="neo-blur">
+                <CardHeader>
+                  <CardTitle className="text-lg font-medium text-glow">Daily Chess Puzzle</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <ChessboardContainer 
+                    startingFen="r2qk2r/ppp1bppp/2n5/3pP3/3P4/2P5/PP4PP/RNBQK2R w KQkq - 0 1"
+                    showControls={false}
+                  />
+                  <div className="text-center">
+                    <p className="text-sm text-muted-foreground mt-2">
+                      White to move and gain advantage. Find the best move!
+                    </p>
+                    <Button variant="outline" className="mt-4 w-full bg-black/20 border-white/10">
+                      Show Solution
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           </motion.div>
         </div>
