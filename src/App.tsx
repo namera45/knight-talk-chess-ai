@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import CommunityPage from "./pages/CommunityPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
+import ChatbotPage from "./pages/ChatbotPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ const App = () => (
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

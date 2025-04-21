@@ -9,7 +9,8 @@ import {
   Users, 
   UserRound, 
   Settings2, 
-  LogOut 
+  LogOut,
+  MessageSquare
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -57,6 +58,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       name: 'Community',
       path: '/community',
       icon: Users,
+    },
+    {
+      name: 'Chatbot',
+      path: '/chatbot',
+      icon: MessageSquare,
     },
     {
       name: 'Profile',

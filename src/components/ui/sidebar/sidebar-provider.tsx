@@ -1,6 +1,6 @@
 
 import React from "react"
-import { SidebarContext, SidebarProviderProps } from "./types"
+import { SidebarContext as SidebarContextType, SidebarProviderProps } from "./types"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
@@ -8,7 +8,7 @@ const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
-export const SidebarContext = React.createContext<SidebarContext | null>(null)
+export const SidebarContext = React.createContext<SidebarContextType | null>(null)
 
 export const useSidebar = () => {
   const context = React.useContext(SidebarContext)
@@ -76,7 +76,7 @@ export const SidebarProvider = React.forwardRef<HTMLDivElement, SidebarProviderP
     }, [toggleSidebar])
 
     const state = open ? "expanded" : "collapsed"
-    const contextValue = React.useMemo<SidebarContext>(
+    const contextValue = React.useMemo<SidebarContextType>(
       () => ({
         state,
         open,

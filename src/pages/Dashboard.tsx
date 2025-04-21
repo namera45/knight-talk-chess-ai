@@ -1,4 +1,3 @@
-
 import { ChartBarIcon, TrophyIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import StatsCard from '@/components/dashboard/StatsCard';
@@ -7,6 +6,8 @@ import UserRatingChart from '@/components/dashboard/UserRatingChart';
 import ChessboardContainer from '@/components/chess/ChessboardContainer';
 import MainLayout from '@/layouts/MainLayout';
 import { ChessGame } from '@/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 // Mock data for demo purposes
 const recentMatches: ChessGame[] = [
@@ -143,15 +144,6 @@ const Dashboard = () => {
           >
             {/* Recent matches */}
             <RecentMatchesList matches={recentMatches} />
-          </motion.div>
-
-          {/* Right column - Rating chart and Daily Puzzle */}
-          <motion.div 
-            variants={itemVariants}
-            className="space-y-6"
-          >
-            {/* Rating chart */}
-            <UserRatingChart data={ratingData} currentRating={1310} />
             
             {/* Daily Chess Puzzle */}
             <motion.div variants={itemVariants}>
@@ -175,6 +167,15 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </motion.div>
+          </motion.div>
+
+          {/* Right column - Rating chart */}
+          <motion.div 
+            variants={itemVariants}
+            className="space-y-6"
+          >
+            {/* Rating chart */}
+            <UserRatingChart data={ratingData} currentRating={1310} />
           </motion.div>
         </div>
       </motion.div>
