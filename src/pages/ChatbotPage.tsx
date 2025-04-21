@@ -9,7 +9,7 @@ import MainLayout from '@/layouts/MainLayout';
 
 const ChatbotPage = () => {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([
-    { role: 'assistant', content: 'Hello! I'm your chess assistant. Feel free to ask me about chess strategies, openings, or general questions about the game!' }
+    { role: 'assistant', content: "Hello! I'm your chess assistant. Feel free to ask me about chess strategies, openings, or general questions about the game!" }
   ]);
   const [input, setInput] = useState('');
 
