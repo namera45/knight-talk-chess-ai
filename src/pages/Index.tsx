@@ -5,9 +5,11 @@ import { motion } from 'framer-motion';
 import FloatingChessPieces from '@/components/chess/FloatingChessPieces';
 import { Button } from '@/components/ui/button';
 import AuthPage from './AuthPage';
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState(null);
   const navigate = useNavigate();
 
   // Simulating a loading screen
@@ -15,24 +17,33 @@ const Index = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1500);
-    
     return () => clearTimeout(timer);
   }, []);
 
+  // Set up Supabase auth listener and redirect to dashboard if authenticated
+  useEffect(() => {
+    // Auth listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      // If session exists (authenticated), go to dashboard
+      if (session) {
+        navigate("/dashboard");
+      }
+    });
+    // Check current session on mount
+    supabase.auth.getSession().then(({ data: { session }}) => {
+      setSession(session);
+      if (session) {
+        navigate("/dashboard");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
   // Logo animation variants
   const logoVariants = {
-    initial: { 
-      opacity: 0,
-      scale: 0.8,
-    },
-    animate: { 
-      opacity: 1,
-      scale: 1,
-      transition: { 
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
   // Loading screen
@@ -65,8 +76,6 @@ const Index = () => {
     );
   }
 
-  // This component will now render the Auth page
-  // In a real app, we'd check if the user is already authenticated
   return <AuthPage />;
 };
 

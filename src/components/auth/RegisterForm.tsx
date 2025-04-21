@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/use-toast";
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ const RegisterForm = () => {
     confirmPassword: '',
   });
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,12 +33,30 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulating registration process
-    setTimeout(() => {
+    setError(null);
+
+    const { email, password, username } = formData;
+    if (!email || !password) {
+      setError("Email and Password are required.");
       setIsLoading(false);
-      navigate('/dashboard');
-    }, 1500);
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Sign up with Supabase
+    const { error } = await supabase.auth.signUp({ email, password, options: { data: { username } } });
+    if (error) {
+      setIsLoading(false);
+      setError(error.message || "Registration failed.");
+      toast({ title: "Signup error", description: error.message || "Failed to sign up.", variant: "destructive" });
+      return;
+    }
+    setIsLoading(false);
+    // Redirected by auth listener on AuthPage.
   };
 
   const toggleShowPassword = () => {
@@ -55,6 +75,9 @@ const RegisterForm = () => {
           <p className="text-muted-foreground text-center">Enter your information to get started</p>
         </CardHeader>
         <CardContent>
+          {error && (
+            <div className="text-destructive font-medium text-center mb-2">{error}</div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +17,7 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +31,19 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulating login process
-    setTimeout(() => {
+    setError(null);
+
+    const { email, password } = formData;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
       setIsLoading(false);
-      navigate('/dashboard');
-    }, 1500);
+      setError(error.message || "Could not sign in.");
+      toast({ title: "Login error", description: error.message || "Could not sign in.", variant: "destructive" });
+      return;
+    }
+    setIsLoading(false);
+    // Redirected by auth listener on AuthPage.
   };
 
   const toggleShowPassword = () => {
@@ -53,6 +62,9 @@ const LoginForm = () => {
           <p className="text-muted-foreground text-center">Enter your credentials to continue</p>
         </CardHeader>
         <CardContent>
+          {error && (
+            <div className="text-destructive font-medium text-center mb-2">{error}</div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
