@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/sidebar';
 
 interface MainLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 interface NavItem {
@@ -38,6 +38,7 @@ interface NavItem {
 const MainLayout = ({ children }: MainLayoutProps) => {
   const location = useLocation();
 
+  // Add Game Analysis and Game Commentary to nav
   const navItems: NavItem[] = [
     {
       name: 'Dashboard',
@@ -60,6 +61,16 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       icon: Users,
     },
     {
+      name: 'Game Analysis',
+      path: '/game-analysis',
+      icon: "analysis", // Lucide icon name, will handle import below
+    },
+    {
+      name: 'Game Commentary',
+      path: '/game-commentary',
+      icon: "commentary", // Lucide icon name
+    },
+    {
       name: 'Chatbot',
       path: '/chatbot',
       icon: MessageSquare,
@@ -75,6 +86,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       icon: Settings2,
     },
   ];
+
+  // Utility to render either imported or string icons
+  const lucideIcons = {
+    analysis: require("lucide-react").analysis,
+    commentary: require("lucide-react").commentary,
+  };
 
   const isActivePath = (path: string) => {
     return location.pathname === path;
@@ -108,7 +125,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                     tooltip={item.name}
                   >
                     <Link to={item.path} className="flex items-center">
-                      <item.icon className="mr-2" />
+                      {/* Render Lucide icon by string key or imported directly */}
+                      {(typeof item.icon === "string" && lucideIcons[item.icon]) ? 
+                        // @ts-ignore
+                        React.createElement(lucideIcons[item.icon], { className: "mr-2" }) : 
+                        React.createElement(item.icon, { className: "mr-2" })}
                       <span>{item.name}</span>
                       {isActivePath(item.path) && (
                         <motion.div
@@ -146,7 +167,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {/* Mobile navigation bar */}
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-sidebar neo-blur">
           <nav className="flex justify-around">
-            {navItems.slice(0, 5).map((item) => (
+            {navItems.slice(0, 7).map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
@@ -157,7 +178,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                     : "text-gray-400"
                 )}
               >
-                <item.icon className={cn("h-6 w-6", isActivePath(item.path) ? "text-primary" : "")} />
+                {(typeof item.icon === "string" && lucideIcons[item.icon]) ? 
+                    // @ts-ignore
+                    React.createElement(lucideIcons[item.icon], { className: "h-6 w-6", color: isActivePath(item.path) ? undefined : "currentColor" }) : 
+                    React.createElement(item.icon, { className: "h-6 w-6", color: isActivePath(item.path) ? undefined : "currentColor" })}
                 <span className="text-xs mt-1">{item.name}</span>
               </Link>
             ))}
