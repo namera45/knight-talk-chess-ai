@@ -1,49 +1,69 @@
 
+# KnightSpeak - AI Chess Commentary Platform 🎤♟️
 
-**Use your preferred IDE**
+KnightSpeak is an innovative AI-powered chess platform that provides real-time commentary, analysis, and insights for chess games.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Features
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- 🎙️ Real-time AI Commentary
+- 📊 Advanced Game Analysis
+- 📚 Interactive Learning Tools
+- 🏆 Performance Tracking
+- 👥 Community Features
+- 🎮 Live Chess Games
+- 📱 Responsive Design
 
-Follow these steps:
+## Tech Stack
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- React
+- TypeScript
+- Tailwind CSS
+- Supabase
+- Chess.js
+- React Query
+- Framer Motion
+- Recharts
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Getting Started
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd knightspeak
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start the development server
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open [http://localhost:8080](http://localhost:8080) in your browser
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/    # Reusable UI components
+├── layouts/       # Layout components
+├── pages/        # Page components
+├── hooks/        # Custom React hooks
+├── lib/          # Utility functions
+└── types/        # TypeScript type definitions
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Contributing
 
-## What technologies are used for this project?
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This project is built with:
+## License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-
+This project is licensed under the MIT License - see the LICENSE file for details.

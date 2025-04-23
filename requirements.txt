@@ -1,0 +1,26 @@
+
+# Frontend Dependencies
+Node.js >= 18.0.0
+npm >= 9.0.0
+
+# Project Dependencies
+- React 18.3.1
+- TypeScript
+- Vite
+- TailwindCSS
+- Supabase
+- Chess.js
+- React Query
+- Framer Motion
+- Recharts
+- React Router DOM
+
+# Development Tools
+- Git
+- Code editor (VS Code recommended)
+
+# How to run
+1. Install Node.js and npm
+2. Clone the repository
+3. Run `npm install`
+4. Run `npm run dev`
