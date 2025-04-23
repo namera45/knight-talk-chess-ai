@@ -10,7 +10,9 @@ import {
   UserRound, 
   Settings2, 
   LogOut,
-  MessageSquare
+  MessageSquare,
+  FileText,
+  ChevronDown
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -38,7 +40,7 @@ interface NavItem {
 const MainLayout = ({ children }: MainLayoutProps) => {
   const location = useLocation();
 
-  // Add Game Analysis and Game Commentary to nav
+  // Updated nav items with proper icon components
   const navItems: NavItem[] = [
     {
       name: 'Dashboard',
@@ -63,12 +65,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     {
       name: 'Game Analysis',
       path: '/game-analysis',
-      icon: "analysis", // Lucide icon name, will handle import below
+      icon: FileText, // Changed to available icon
     },
     {
       name: 'Game Commentary',
       path: '/game-commentary',
-      icon: "commentary", // Lucide icon name
+      icon: ChevronDown, // Changed to available icon
     },
     {
       name: 'Chatbot',
@@ -86,12 +88,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       icon: Settings2,
     },
   ];
-
-  // Utility to render either imported or string icons
-  const lucideIcons = {
-    analysis: require("lucide-react").analysis,
-    commentary: require("lucide-react").commentary,
-  };
 
   const isActivePath = (path: string) => {
     return location.pathname === path;
@@ -125,11 +121,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                     tooltip={item.name}
                   >
                     <Link to={item.path} className="flex items-center">
-                      {/* Render Lucide icon by string key or imported directly */}
-                      {(typeof item.icon === "string" && lucideIcons[item.icon]) ? 
-                        // @ts-ignore
-                        React.createElement(lucideIcons[item.icon], { className: "mr-2" }) : 
-                        React.createElement(item.icon, { className: "mr-2" })}
+                      {React.createElement(item.icon, { className: "mr-2" })}
                       <span>{item.name}</span>
                       {isActivePath(item.path) && (
                         <motion.div
@@ -178,10 +170,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                     : "text-gray-400"
                 )}
               >
-                {(typeof item.icon === "string" && lucideIcons[item.icon]) ? 
-                    // @ts-ignore
-                    React.createElement(lucideIcons[item.icon], { className: "h-6 w-6", color: isActivePath(item.path) ? undefined : "currentColor" }) : 
-                    React.createElement(item.icon, { className: "h-6 w-6", color: isActivePath(item.path) ? undefined : "currentColor" })}
+                {React.createElement(item.icon, { 
+                  className: "h-6 w-6", 
+                  color: isActivePath(item.path) ? undefined : "currentColor" 
+                })}
                 <span className="text-xs mt-1">{item.name}</span>
               </Link>
             ))}
