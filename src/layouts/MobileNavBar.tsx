@@ -6,8 +6,9 @@ import {
   BookOpen,
   Users,
   FileText,
-  ChevronDown,
   MessageSquare,
+  Settings,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,16 @@ const navItems = [
     icon: Gamepad2,
   },
   {
+    name: "Analysis",
+    path: "/game-analysis",
+    icon: FileText,
+  },
+  {
+    name: "Commentary",
+    path: "/game-commentary",
+    icon: MessageSquare,
+  },
+  {
     name: "Learn",
     path: "/learn",
     icon: BookOpen,
@@ -33,19 +44,14 @@ const navItems = [
     icon: Users,
   },
   {
-    name: "Game Analysis",
-    path: "/game-analysis",
-    icon: FileText,
+    name: "Profile",
+    path: "/profile",
+    icon: User,
   },
   {
-    name: "Game Commentary",
-    path: "/game-commentary",
-    icon: ChevronDown,
-  },
-  {
-    name: "Chatbot",
-    path: "/chatbot",
-    icon: MessageSquare,
+    name: "Settings",
+    path: "/settings",
+    icon: Settings,
   },
 ];
 
@@ -55,20 +61,22 @@ const MobileNavBar = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-sidebar neo-blur">
-      <nav className="flex justify-around">
+      <nav className="flex justify-around overflow-x-auto">
         {navItems.map((item) => (
           <Link
             key={item.name}
             to={item.path}
             className={cn(
-              "flex flex-col items-center py-3 px-2",
-              isActivePath(item.path) ? "text-primary" : "text-gray-400"
+              "flex flex-col items-center py-3 px-2 min-w-[60px]",
+              isActivePath(item.path) 
+                ? "text-primary border-t-2 border-primary" 
+                : "text-gray-400"
             )}
           >
             {item.icon && (
               // @ts-ignore
               <item.icon
-                className="h-6 w-6"
+                className="h-5 w-5"
                 color={isActivePath(item.path) ? undefined : "currentColor"}
               />
             )}

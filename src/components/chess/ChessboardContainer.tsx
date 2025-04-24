@@ -5,7 +5,7 @@ import { Chess } from 'chess.js';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MicrophoneIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline';
+import { VolumeX, Volume2, Play, Pause, RotateCw } from 'lucide-react';
 
 interface ChessboardContainerProps {
   startingFen?: string;
@@ -16,7 +16,7 @@ const ChessboardContainer = ({
   startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 
   showControls = true 
 }: ChessboardContainerProps) => {
-  const [game, setGame] = useState(new Chess(startingFen));
+  const [game, setGame] = useState(new Chess());
   const [orientation, setOrientation] = useState<'white' | 'black'>('white');
   const [isCommenting, setIsCommenting] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
@@ -24,9 +24,13 @@ const ChessboardContainer = ({
   
   useEffect(() => {
     try {
-      setGame(new Chess(startingFen));
+      const chess = new Chess();
+      chess.load(startingFen);
+      setGame(chess);
+      // Reset move history when FEN changes
+      setMoveHistory([]);
     } catch (e) {
-      console.error("Invalid FEN string", e);
+      console.error("Invalid FEN string:", e);
       setGame(new Chess());
     }
   }, [startingFen]);
@@ -66,8 +70,14 @@ const ChessboardContainer = ({
   };
 
   const resetGame = () => {
-    setGame(new Chess(startingFen));
-    setMoveHistory([]);
+    try {
+      const chess = new Chess(startingFen);
+      setGame(chess);
+      setMoveHistory([]);
+    } catch (e) {
+      console.error("Error resetting game:", e);
+      setGame(new Chess());
+    }
   };
 
   const toggleAudio = () => {
@@ -101,7 +111,7 @@ const ChessboardContainer = ({
                 exit={{ opacity: 0 }}
                 className="flex items-center text-sm bg-primary/20 px-3 py-1 rounded-full"
               >
-                <MicrophoneIcon className="w-4 h-4 mr-1 animate-pulse-glow" />
+                <Volume2 className="w-4 h-4 mr-1 animate-pulse-glow" />
                 <span>AI Commentary...</span>
               </motion.div>
             )}
@@ -124,6 +134,7 @@ const ChessboardContainer = ({
             <div className="flex flex-wrap gap-2 mt-4 justify-between">
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={resetGame}>
+                  <RotateCw className="h-4 w-4 mr-2" />
                   Reset
                 </Button>
                 <Button variant="outline" size="sm" onClick={flipBoard}>
@@ -138,12 +149,12 @@ const ChessboardContainer = ({
               >
                 {audioEnabled ? (
                   <>
-                    <SpeakerWaveIcon className="w-4 h-4 mr-2" />
+                    <Volume2 className="w-4 h-4 mr-2" />
                     Commentary On
                   </>
                 ) : (
                   <>
-                    <SpeakerXMarkIcon className="w-4 h-4 mr-2" />
+                    <VolumeX className="w-4 h-4 mr-2" />
                     Commentary Off
                   </>
                 )}

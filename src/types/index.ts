@@ -63,3 +63,50 @@ export interface CommentarySettings {
   language: string;
   enabled: boolean;
 }
+
+// Analysis and commentary types
+export interface AnalysisResult {
+  status: string;
+  gameId: string;
+  metadata: GameMetadata;
+  analysis: MoveAnalysis[];
+  commentary: GameCommentary;
+  analysisStored: boolean;
+  commentaryStored: boolean;
+}
+
+export interface GameMetadata {
+  white: string;
+  black: string;
+  date: string;
+  result: GameResult;
+  event?: string;
+  site?: string;
+  round?: string;
+  eco?: string;
+  whiteElo?: string;
+  blackElo?: string;
+  timeControl?: string;
+}
+
+export interface MoveAnalysis {
+  moveNumber: number;
+  move: string;
+  color: 'w' | 'b';
+  fen: string;
+  evalBefore: number;
+  evalAfter: number;
+  classification: 'accurate' | 'good' | 'inaccuracy' | 'mistake' | 'blunder' | 'gameEnd';
+  isCheck: boolean;
+  isCheckmate: boolean;
+  isStalemate: boolean;
+  isDraw: boolean;
+  isGameOver: boolean;
+}
+
+export interface GameCommentary {
+  moveNumber: number;
+  fenBefore: string;
+  coach: string;
+  commentator: string;
+}
