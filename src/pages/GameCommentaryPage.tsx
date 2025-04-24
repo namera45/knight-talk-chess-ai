@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -53,7 +52,9 @@ const GameCommentaryPage = () => {
       if (error) throw error;
       
       if (data?.commentary) {
-        setCommentary(data.commentary as GameCommentary[]);
+        // Add proper type casting here
+        const parsedCommentary = data.commentary as unknown as GameCommentary[];
+        setCommentary(parsedCommentary);
         
         // Also fetch the game analysis to get the PGN/FEN
         const { data: analysisData, error: analysisError } = await supabase
@@ -61,28 +62,28 @@ const GameCommentaryPage = () => {
           .select("format, metadata")
           .eq("gameid", id)
           .maybeSingle();
-          
-        if (analysisError) throw analysisError;
         
-        if (analysisData) {
-          // Set the game metadata
-          setGameText(`Game between ${analysisData.metadata.white} and ${analysisData.metadata.black} (${analysisData.metadata.date})`);
-        }
-      } else {
-        setError("No commentary found for this game.");
+      if (analysisError) throw analysisError;
+      
+      if (analysisData?.metadata) {
+        const metadata = analysisData.metadata as { white: string; black: string; date: string };
+        setGameText(`Game between ${metadata.white} and ${metadata.black} (${metadata.date})`);
       }
-    } catch (err: any) {
-      console.error("Error fetching commentary:", err);
-      setError(err.message || "Failed to load commentary");
-      toast({
-        title: "Error",
-        description: "Failed to load game commentary",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+    } else {
+      setError("No commentary found for this game.");
     }
-  };
+  } catch (err: any) {
+    console.error("Error fetching commentary:", err);
+    setError(err.message || "Failed to load commentary");
+    toast({
+      title: "Error",
+      description: "Failed to load game commentary",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Generate new commentary from text input
   const handleSubmit = (e: React.FormEvent) => {
